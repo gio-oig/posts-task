@@ -31,6 +31,8 @@ type PostContextProps = {
 
 const PostContext = createContext<PostContextProps | null>(null);
 
+let POST_ID = 101;
+
 type PostContextProviderProps = {
   children: ReactNode;
 };
@@ -64,12 +66,8 @@ export const PostContextProvider = ({ children }: PostContextProviderProps) => {
     const res = await createPost(newPost);
 
     setPosts((posts) => {
-      if (posts?.length) {
-        const newPost = { ...res.data, id: posts.length + 1 };
-        return [newPost, ...posts];
-      } else {
-        return [res.data];
-      }
+      const newPost = { ...res.data, id: ++POST_ID };
+      return [newPost, ...(posts || [])];
     });
   };
 
