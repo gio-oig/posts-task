@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { usePosts } from "../../context/postContext";
+import { usePosts } from "src/context/postContext";
 
 const PostDetails = () => {
   const { id } = useParams();
@@ -12,11 +12,10 @@ const PostDetails = () => {
   }, [id]);
 
   return (
-    <div>
-      post {id}
+    <div className="max-w-[1000px] mx-auto mt-5 px-5">
       <div>
-        <h1>{post?.title}</h1>
-        <div>{post?.body}</div>
+        <h1 className="text-2xl font-medium mb-8 capitalize">{post?.title}</h1>
+        <div className="">{post?.body}</div>
       </div>
     </div>
   );

@@ -1,6 +1,8 @@
 import {
   createContext,
+  Dispatch,
   ReactNode,
+  SetStateAction,
   useContext,
   useEffect,
   useState,
@@ -13,13 +15,18 @@ import {
   UpdatePost,
   NewPost,
   Post,
+  deletePostHttp,
 } from "../api/post";
 
 type PostContextProps = {
   post: Post | undefined;
+  postToUpdate: Post | undefined;
+  setPostToUpdate: Dispatch<SetStateAction<Post | undefined>>;
   posts: Post[] | undefined;
+  deletePost: (postId: number) => void;
   getPostById: (postId: number) => Promise<void>;
   createNewPost: (newPost: NewPost) => Promise<void>;
+  updatePostById: (updatedPost: UpdatePost) => Promise<void>;
 };
 
 const PostContext = createContext<PostContextProps | null>(null);
@@ -31,6 +38,7 @@ type PostContextProviderProps = {
 export const PostContextProvider = ({ children }: PostContextProviderProps) => {
   const [posts, setPosts] = useState<Post[]>();
   const [post, setPost] = useState<Post>();
+  const [postToUpdate, setPostToUpdate] = useState<Post>();
 
   const fetchPosts = async () => {
     const res = await getAllPosts();
@@ -54,14 +62,29 @@ export const PostContextProvider = ({ children }: PostContextProviderProps) => {
 
   const createNewPost = async (newPost: NewPost) => {
     const res = await createPost(newPost);
-    setPosts((posts) => [res.data, ...(posts || [])]);
+
+    setPosts((posts) => {
+      if (posts?.length) {
+        const newPost = { ...res.data, id: posts.length + 1 };
+        return [newPost, ...posts];
+      } else {
+        return [res.data];
+      }
+    });
   };
 
   const updatePostById = async (updatedPost: UpdatePost) => {
     const res = await updatePost(updatedPost);
-    if (res.status === 200) {
-    }
-    setPosts((posts) => [res.data, ...(posts || [])]);
+
+    setPosts((posts) =>
+      posts?.map((post) => (post.id === res.data.id ? res.data : post))
+    );
+  };
+
+  const deletePost = async (postId: number) => {
+    deletePostHttp(postId).then(() => {
+      setPosts((posts) => posts?.filter((post) => post.id !== postId));
+    });
   };
 
   useEffect(() => {
@@ -71,8 +94,12 @@ export const PostContextProvider = ({ children }: PostContextProviderProps) => {
   const contextValues = {
     post,
     posts,
+    postToUpdate,
+    setPostToUpdate,
     getPostById,
     createNewPost,
+    updatePostById,
+    deletePost,
   };
 
   return (

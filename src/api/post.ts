@@ -25,5 +25,9 @@ export const createPost = async (newPost: NewPost) => {
 };
 
 export const updatePost = async (updatedPost: UpdatePost) => {
-  return await axios.put<Post>(baseurl, updatedPost);
+  return await axios.put<Post>(`${baseurl}/${updatedPost.id}`, updatedPost);
+};
+
+export const deletePostHttp = async (postId: number) => {
+  return await axios.delete(`${baseurl}/${postId}`);
 };
