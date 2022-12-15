@@ -31,7 +31,7 @@ const CreateOrUpdateModal = ({ post, close }: CreateOrUpdateModalProps) => {
   return (
     <div className="fixed left-0 top-0 w-screen h-screen bg-[rgba(128,128,128,0.78)]">
       <div
-        className="rounded-2xl border min-w-[500px] border-blue-100 bg-white p-8 shadow-lg fixed left-2/4 top-1/4 -translate-x-1/2"
+        className="rounded-2xl border w-full max-w-[500px] border-blue-100 bg-white p-8 shadow-lg fixed left-2/4 top-1/4 -translate-x-1/2"
         role="alert"
       >
         <p className="mt-3 text-lg font-medium sm:mt-0">

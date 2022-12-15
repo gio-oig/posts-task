@@ -16,11 +16,11 @@ const Home = () => {
   };
 
   return (
-    <div className="m-auto max-w-lg">
+    <div className="m-auto max-w-lg px-2 sm:px-0">
       <section className="flex items-center justify-between py-4">
         <h2 className="text-2xl font-bold">Posts</h2>
         <Button
-          className="rounded bg-indigo-600 px-8 py-3 font-medium"
+          className="rounded bg-indigo-600 px-8 py-3 font-medium w-auto"
           onClick={() => setIsCreateModalShown(true)}
         >
           create new
