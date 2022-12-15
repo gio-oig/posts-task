@@ -38,11 +38,11 @@ const PostCard = ({ post, onUpdate, onDelete }: PostCardPros) => {
 
         <p className="line-clamp mt-1 text-sm text-gray-700 ">{post.body}</p>
         <div className="flex gap-x-2 mt-5">
-          <Button className="bg-indigo-600 py-2 px-2" onClick={onUpdate}>
+          <Button className="bg-indigo-600 py-2 px-3" onClick={onUpdate}>
             Update
           </Button>
-          <Button className="bg-red-600 py-2 px-2" onClick={handelDeleteClick}>
-            {isDeleteClicked ? "Click agan to delete" : "Delete"}
+          <Button className="bg-red-600 py-2 px-3" onClick={handelDeleteClick}>
+            {isDeleteClicked ? "Click agan to confirm" : "Delete"}
           </Button>
         </div>
       </div>
